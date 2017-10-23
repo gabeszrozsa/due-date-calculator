@@ -6,6 +6,16 @@ class DueDateCalculator {
     this.turnaroundTime = this.validateNumber(turnaroundTime);
   }
 
+
+
+  /*
+  Returns a Date object when the param is a date string.
+  If not or empty, returns an error message.
+  Valid inputs:
+   - '2017-10-22' (string)
+   - '2017.10.22' (string)
+   - any Date object
+  */
   validateDate(inputDate) {
     if (inputDate instanceof Date) {
       return inputDate;
@@ -30,6 +40,15 @@ class DueDateCalculator {
     return new Date(inputDate);
   }
 
+
+
+  /*
+  Returns a number when the param is a number.
+  If not or empty, returns an error message.
+  Valid inputs:
+   - any string that can be converted to positive Integer
+   - any number
+  */
   validateNumber(number) {
     if (!number && number !== 0) {
       return 'Empty time';
@@ -46,6 +65,16 @@ class DueDateCalculator {
     return parseInt(number);
   }
 
+
+
+  /*
+  Returns the name of the day based on the day's number in the week.
+  If the param is not a Date object, returns an error message.
+  Valid inputs:
+  - '2017-10-22' (string)
+  - '2017.10.22' (string)
+   - any Date object
+  */
   getDayNameFromDate(inputDate) {
     if (!inputDate) {
       return 'No day input';
@@ -60,6 +89,13 @@ class DueDateCalculator {
     return dayNames[day.getDay()];
   }
 
+
+  /*
+  Returns the input Date param object with the added hours from the first param.
+  Hours is required and must be number.
+  Input date is required and must be a Date object.
+  Otherwise it returns an error message.
+  */
   addHoursToDate(hours, inputDate) {
     if (!hours) {
       return 'No hours input';
@@ -82,6 +118,12 @@ class DueDateCalculator {
     return moment(date).add(hoursToAdd,'hours')._d;
   }
 
+
+
+  /*
+  Calculates the due date from the submitDate (Date) and the turnaroundTime (number and measured in hours)
+  The function does not deal with weekends or hours outside of working hours (9:00 - 17:00)
+  */
   calculateDueDate() {
     const submitDate = this.submitDate;
     const turnaroundTime = this.turnaroundTime;
@@ -93,20 +135,26 @@ class DueDateCalculator {
       return false;
     }
 
+
     let dueDate = moment(submitDate);
 
     for (let i = 1; i <= turnaroundTime; i++) {
+
+      // check every hour if it's in working hours
       let nextHour = moment(this.addHoursToDate(1, dueDate._d));
-
       let isNextWorkingHour = (nextHour.hour() === 17 && nextHour.minutes() > 0 || nextHour.hour() > 17);
-      let hoursToAdd = (isNextWorkingHour) ? 17 : 1;
 
+      // if it exceed's the current day, then move it to the next day
+      let hoursToAdd = (isNextWorkingHour) ? 17 : 1;
       dueDate = moment(this.addHoursToDate(hoursToAdd, dueDate._d));
 
+
+      // check if the next day is weekend, if the due day has to be moved to the next day
       if (isNextWorkingHour) {
         let currentDayName = this.getDayNameFromDate(dueDate._d);
-        if (currentDayName === 'Saturday') {
 
+        // if it's weekend, move it to the next Monday
+        if (currentDayName === 'Saturday') {
           dueDate.add(2,'days');
           // BUG: Lost Timezone info ??
           // dueDate.add(48,'hours');
