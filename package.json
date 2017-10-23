@@ -2,10 +2,10 @@
   "name": "due-date-calculator",
   "version": "1.0.0",
   "description": "Calculate due date from submit date and turnaround time and return the time when the issue is to be resolved.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha test/tests.js",
-    "start": "node ."
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/gabeszrozsa/due-date-calculator#readme",
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "moment": "^2.19.1"
   }
 }
