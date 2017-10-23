@@ -8,13 +8,14 @@ class DueDateCalculator {
 
 
 
-  /*
-  Returns a Date object when the param is a date string.
-  If not or empty, returns an error message.
-  Valid inputs:
-   - '2017-10-22' (string)
-   - '2017.10.22' (string)
-   - any Date object
+  /**
+  * Returns a Date object when the param is a date string.
+  * If not or empty, returns an error message.
+  * @param {string | date} inputDate
+  *     examples:
+  *       - '2017-10-22' (string)
+  *       - '2017.10.22' (string)
+  *       - any Date object
   */
   validateDate(inputDate) {
     if (inputDate instanceof Date) {
@@ -42,12 +43,13 @@ class DueDateCalculator {
 
 
 
-  /*
-  Returns a number when the param is a number.
-  If not or empty, returns an error message.
-  Valid inputs:
-   - any string that can be converted to positive Integer
-   - any number
+  /**
+  * Returns a number when the param is a number.
+  * If not or empty, returns an error message.
+  * @param {string | number} number
+  *     examples:
+  *      - any string that can be converted to positive Integer
+  *      - any number
   */
   validateNumber(number) {
     if (!number && number !== 0) {
@@ -67,13 +69,14 @@ class DueDateCalculator {
 
 
 
-  /*
-  Returns the name of the day based on the day's number in the week.
-  If the param is not a Date object, returns an error message.
-  Valid inputs:
-  - '2017-10-22' (string)
-  - '2017.10.22' (string)
-   - any Date object
+  /**
+  * Returns the name of the day based on the day's number in the week.
+  * If the param is not a Date object, returns an error message.
+  * @param {string | date} inputDate
+  *     examples:
+  *       - '2017-10-22' (string)
+  *       - '2017.10.22' (string)
+  *       - any Date object
   */
   getDayNameFromDate(inputDate) {
     if (!inputDate) {
@@ -90,11 +93,13 @@ class DueDateCalculator {
   }
 
 
-  /*
-  Returns the input Date param object with the added hours from the first param.
-  Hours is required and must be number.
-  Input date is required and must be a Date object.
-  Otherwise it returns an error message.
+  /**
+  * Returns the input Date param object with the added hours from the first param.
+  * Hours is required and must be number.
+  * Input date is required and must be a Date object.
+  * Otherwise it returns an error message.
+  * @param {string | number} hours
+  * @param {string | date} inputDate
   */
   addHoursToDate(hours, inputDate) {
     if (!hours) {
@@ -120,9 +125,9 @@ class DueDateCalculator {
 
 
 
-  /*
-  Calculates the due date from the submitDate (Date) and the turnaroundTime (number and measured in hours)
-  The function does not deal with weekends or hours outside of working hours (9:00 - 17:00)
+  /**
+  * Calculates the due date from the submitDate (Date) and the turnaroundTime (number and measured in hours)
+  * The function does not deal with weekends or hours outside of working hours (9:00 - 17:00)
   */
   calculateDueDate() {
     const submitDate = this.submitDate;
